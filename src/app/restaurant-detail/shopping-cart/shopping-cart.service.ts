@@ -11,13 +11,26 @@ export class ShoppingCartService{
     addItem(item:MenuItem){
         let fountItem = this.items.find((mItem)=> mItem.menuItem.id === item.id)
         if(fountItem){
-            fountItem.quantity = fountItem.quantity + 1
+           this.increaseQty(fountItem)
         }else{
-            this.items.push(new CartItem(item))
+           this.items.push(new CartItem(item))
         }
     }
     removeItem(item:CartItem){
         this.items.splice(this.items.indexOf(item),1)
+    }
+
+
+    increaseQty(item: CartItem ){
+        item.quantity = item.quantity + 1
+    }
+
+    decreaseQty(item: CartItem ){
+        item.quantity = item.quantity -1
+        if(item.quantity === 0){
+            this.removeItem(item)
+        }
+
     }
 
     total(): number{
